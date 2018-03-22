@@ -15,6 +15,23 @@ class App extends Component {
     this.props.addReminder(this.state.text);
   }
 
+  renderReminders() {
+    const { reminders } = this.props;
+    return (
+      <ul className="list-group col-sm-4">
+        {
+          reminders.map(reminder => {
+            return (
+              <li key={reminder.id} className="list-group-item">
+                <div>{reminder.text}</div>
+              </li>
+            )
+          })
+        }
+      </ul>
+    )
+  }
+
   render() {
     return (
       <div className='App'>
@@ -29,10 +46,11 @@ class App extends Component {
               onChange={event => this.setState({text: event.target.value})}
             />
           </div>
+          {this.renderReminders()}
           <button
             type="button"
             className="btn btn-success"
-            onClick={() = this.addReminder()}
+            onClick={() => this.addReminder()}
             >
               Add Reminder
             </button>
@@ -42,8 +60,14 @@ class App extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({addReminder}, dispatch);
+function mapStateToProps(state) {
+  return {
+    reminders: state
+  }
 }
 
-export default connect(null, mapDispatchtoProps)(App);
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({addReminder}, dispatch);
+// }
+
+export default connect(mapStateToProps, { addReminder })(App);

@@ -5,4 +5,5 @@ export const addReminder = (text) => {
     type: ADD_REMINDER,
     text
   }
+  return action;
 }
